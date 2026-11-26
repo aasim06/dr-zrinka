@@ -37,6 +37,16 @@ export function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const onViewportChange = () => {
+      if (mq.matches) setOpen(false);
+    };
+    onViewportChange();
+    mq.addEventListener("change", onViewportChange);
+    return () => mq.removeEventListener("change", onViewportChange);
+  }, []);
+
+  useEffect(() => {
     if (!open) return;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -115,103 +125,100 @@ export function Navbar() {
         </Container>
       </header>
 
-      {/* Mobile navigation drawer */}
-      <div
-        id="mobile-nav-drawer"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Mobile navigation"
-        aria-hidden={!open}
-        className={cn(
-          "fixed inset-0 z-50 transition-all duration-300 md:hidden",
-          open ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"
-        )}
-      >
+      {/* Mobile navigation drawer — mounted only when open on mobile */}
+      {open && (
         <div
-          onClick={() => setOpen(false)}
-          className="absolute inset-0 bg-ink/45 backdrop-blur-[2px]"
-        />
-
-        <div
-          className={cn(
-            "relative ml-auto flex h-full w-[min(360px,88vw)] flex-col overflow-y-auto border-l border-line border-t-[3px] border-t-gold bg-paper px-6 pb-8 pt-6 shadow-[-20px_0_50px_rgba(22,19,18,0.22)] transition-transform duration-300",
-            open ? "translate-x-0" : "translate-x-full"
-          )}
+          id="mobile-nav-drawer"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+          className="fixed inset-0 z-50 md:hidden"
         >
-          <div className="flex items-center justify-between border-b border-line pb-4">
-            <span className="text-[11px] font-medium tracking-[0.16em] text-red uppercase">
-              Navigation
-            </span>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Close navigation menu"
-              className="inline-flex h-9 w-9 items-center justify-center border border-line bg-white text-xl leading-none text-ink transition-colors hover:border-gold hover:text-red"
-            >
-              &times;
-            </button>
-          </div>
+          <div
+            onClick={() => setOpen(false)}
+            style={{ animation: "drawerFadeIn 220ms ease-out" }}
+            className="absolute inset-0 bg-ink/45 backdrop-blur-[2px]"
+          />
 
-          <nav aria-label="Mobile" className="mt-2 flex-1">
-            <ul className="m-0 list-none p-0">
-              {navLinks.map((l) => {
-                const active = isActive(l.href, l.match);
-                return (
-                  <li key={l.href} className="border-b border-line">
+          <div
+            style={{ animation: "drawerSlideIn 260ms cubic-bezier(0.22, 1, 0.36, 1)" }}
+            className="relative ml-auto flex h-full w-[min(360px,88vw)] flex-col overflow-y-auto border-l border-line border-t-[3px] border-t-gold bg-paper px-6 pb-8 pt-6 shadow-[-20px_0_50px_rgba(22,19,18,0.22)]"
+          >
+            <div className="flex items-center justify-between border-b border-line pb-4">
+              <span className="text-[11px] font-medium tracking-[0.16em] text-red uppercase">
+                Navigation
+              </span>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Close navigation menu"
+                className="inline-flex h-9 w-9 items-center justify-center border border-line bg-white text-xl leading-none text-ink transition-colors hover:border-gold hover:text-red"
+              >
+                &times;
+              </button>
+            </div>
+
+            <nav aria-label="Mobile" className="mt-2 flex-1">
+              <ul className="m-0 list-none p-0">
+                {navLinks.map((l) => {
+                  const active = isActive(l.href, l.match);
+                  return (
+                    <li key={l.href} className="border-b border-line">
+                      <Link
+                        href={l.href}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          "flex items-center justify-between py-3.5 font-serif text-[24px] leading-snug transition-colors hover:text-red",
+                          active ? "font-semibold text-red" : "font-medium text-ink"
+                        )}
+                      >
+                        <span>{l.label}</span>
+                        {active && <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-gold" />}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <div className="mt-7">
+                <p className="mb-3 text-[11px] font-medium tracking-[0.14em] text-muted uppercase">
+                  Advisory &amp; Speaking
+                </p>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[13px]">
+                  {quickLinks.map((q) => (
                     <Link
-                      href={l.href}
+                      key={q.href}
+                      href={q.href}
                       onClick={() => setOpen(false)}
                       className={cn(
-                        "flex items-center justify-between py-3.5 font-serif text-[24px] leading-snug transition-colors hover:text-red",
-                        active ? "font-semibold text-red" : "font-medium text-ink"
+                        "py-1 transition-colors hover:text-red",
+                        pathname === q.href ? "font-medium text-red" : "text-muted"
                       )}
                     >
-                      <span>{l.label}</span>
-                      {active && <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-gold" />}
+                      {q.label}
                     </Link>
-                  </li>
-                );
-              })}
-            </ul>
-
-            <div className="mt-7">
-              <p className="mb-3 text-[11px] font-medium tracking-[0.14em] text-muted uppercase">
-                Advisory &amp; Speaking
-              </p>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[13px]">
-                {quickLinks.map((q) => (
-                  <Link
-                    key={q.href}
-                    href={q.href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "py-1 transition-colors hover:text-red",
-                      pathname === q.href ? "font-medium text-red" : "text-muted"
-                    )}
-                  >
-                    {q.label}
-                  </Link>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          </nav>
+            </nav>
 
-          <div className="mt-8 border-t border-line pt-6">
-            <Button
-              href="/strategic-conversation"
-              variant="secondary"
-              size="sm"
-              className="w-full text-center"
-              onClick={() => setOpen(false)}
-            >
-              Start a Strategic Conversation
-            </Button>
-            <p className="mt-4 text-center text-[11px] tracking-[0.1em] text-muted uppercase">
-              Frankfurt/M · Zagreb · International
-            </p>
+            <div className="mt-8 border-t border-line pt-6">
+              <Button
+                href="/strategic-conversation"
+                variant="secondary"
+                size="sm"
+                className="w-full text-center"
+                onClick={() => setOpen(false)}
+              >
+                Start a Strategic Conversation
+              </Button>
+              <p className="mt-4 text-center text-[11px] tracking-[0.1em] text-muted uppercase">
+                Frankfurt/M · Zagreb · International
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
