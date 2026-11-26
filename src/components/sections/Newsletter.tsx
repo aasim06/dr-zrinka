@@ -20,21 +20,31 @@ export function Newsletter() {
     try { sessionStorage.setItem("jpop", "1"); } catch {}
   }
 
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
   return (
     <aside
       role="dialog"
       aria-label="Subscribe to The Journal"
+      aria-hidden={!open}
       className={[
         "fixed bottom-6 right-4 z-40 w-[min(380px,calc(100%-32px))] border-t-[3px] border-gold bg-white px-7 pb-[26px] pt-[30px] shadow-[0_24px_60px_rgba(0,0,0,.28)] transition-all duration-[400ms] sm:right-6",
-        open ? "visible translate-y-0 opacity-100" : "invisible translate-y-6 opacity-0",
+        open ? "visible translate-y-0 opacity-100" : "invisible pointer-events-none translate-y-6 opacity-0",
       ].join(" ")}
     >
-      <button onClick={close} aria-label="Close" className="absolute right-3 top-2 p-1.5 text-[26px] leading-none text-muted">
+      <button onClick={close} aria-label="Close" className="absolute right-3 top-2 p-1.5 text-[26px] leading-none text-muted hover:text-ink">
         &times;
       </button>
       <Heading level={3} className="italic">Your Sunday morning read.</Heading>
       <p className="mb-[18px] mt-1.5 font-medium">Subscribe to The Journal.</p>
-      <NewsletterForm onDone={close} />
+      <NewsletterForm onDone={close} compact />
     </aside>
   );
 }

@@ -3,15 +3,18 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { LanguageToggle } from "@/components/forms/LanguageToggle";
 
-export function NewsletterForm({ onDone }: { onDone?: () => void }) {
+export function NewsletterForm({ onDone, compact }: { onDone?: () => void; compact?: boolean }) {
   const [email, setEmail] = useState("");
+  const [language, setLanguage] = useState<"English" | "German">("English");
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">("idle");
   const [error, setError] = useState("");
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (email.indexOf("@") < 1) {
+    const cleanEmail = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
       setError("Please enter a valid email address.");
       return;
     }
@@ -21,7 +24,7 @@ export function NewsletterForm({ onDone }: { onDone?: () => void }) {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: cleanEmail, language }),
       });
       if (!res.ok) throw new Error();
       setStatus("ok");
@@ -48,6 +51,7 @@ export function NewsletterForm({ onDone }: { onDone?: () => void }) {
         error={error}
         required
       />
+      <LanguageToggle value={language} onChange={setLanguage} label="Language" compact={compact} />
       <Button type="submit" variant="secondary" className="w-full" disabled={status === "loading"}>
         {status === "loading" ? "Sending…" : "Subscribe"}
       </Button>
