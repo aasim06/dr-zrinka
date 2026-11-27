@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/sections/PageHero";
-import { Container } from "@/components/ui/Container";
-import { Eyebrow, Heading } from "@/components/ui/Heading";
-import { Button } from "@/components/ui/Button";
+import { ImpressumView } from "@/components/views/general-views";
+import { getPublicSiteSettings } from "@/lib/public-data";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Impressum",
@@ -40,98 +40,7 @@ const legalSections = [
   },
 ];
 
-export default function ImpressumPage() {
-  return (
-    <>
-      <PageHero
-        compact
-        eyebrow="Legal Notice · Angaben gemäß § 5 TMG / DDG"
-        title="Impressum"
-        lead="Dr. Zrinka – Executive & Leadership Advisory · Geschäftsführerin: Dr. Zrinka K. Fidermuc Maler"
-        secondaryCta={{ label: "Datenschutz / Privacy", href: "/datenschutz" }}
-      />
-
-      <section className="bg-paper py-[72px] md:py-[104px]">
-        <Container className="grid gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
-          <aside className="space-y-6">
-            <div className="border border-line border-t-[3px] border-t-gold bg-white p-8">
-              <Eyebrow tone="red" className="mb-3">Kontakt &amp; Adresse</Eyebrow>
-              <Heading level={3} className="mb-5 !text-[26px]">
-                Dr. Zrinka – Executive &amp; Leadership Advisory
-              </Heading>
-              <dl className="divide-y divide-line text-sm">
-                <div className="py-3">
-                  <dt className="text-xs tracking-[0.1em] text-muted uppercase">Geschäftsführerin</dt>
-                  <dd className="mt-1 font-medium text-ink">Dr. Zrinka K. Fidermuc Maler</dd>
-                </div>
-                <div className="py-3">
-                  <dt className="text-xs tracking-[0.1em] text-muted uppercase">Adresse</dt>
-                  <dd className="mt-1 font-medium text-ink">
-                    Kaiserstr. 61
-                    <br />
-                    60329 Frankfurt am Main
-                  </dd>
-                </div>
-                <div className="py-3">
-                  <dt className="text-xs tracking-[0.1em] text-muted uppercase">E-Mail</dt>
-                  <dd className="mt-1 font-medium">
-                    <a href="mailto:info@dr-zrinka.com" className="text-ink hover:text-red">
-                      info@dr-zrinka.com
-                    </a>
-                  </dd>
-                </div>
-                <div className="py-3">
-                  <dt className="text-xs tracking-[0.1em] text-muted uppercase">Telefon</dt>
-                  <dd className="mt-1 font-medium">
-                    <a href="tel:+496967727688" className="text-ink hover:text-red">
-                      +49 69 677 27 688
-                    </a>
-                  </dd>
-                </div>
-                <div className="py-3">
-                  <dt className="text-xs tracking-[0.1em] text-muted uppercase">USt.-Id.Nr.</dt>
-                  <dd className="mt-1 font-medium text-ink">DE258257204</dd>
-                </div>
-                <div className="py-3">
-                  <dt className="text-xs tracking-[0.1em] text-muted uppercase">Fotos Dr. Zrinka</dt>
-                  <dd className="mt-1 text-ink">
-                    Dietrich Skrock —{" "}
-                    <a
-                      href="https://www.skrock.de"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline hover:text-red"
-                    >
-                      skrock.de
-                    </a>
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </aside>
-
-          <div className="space-y-10 border-t border-ink pt-8">
-            {legalSections.map((sec) => (
-              <section key={sec.title} className="border-b border-line pb-8">
-                <Heading level={3} className="mb-4 !text-[26px]">
-                  {sec.title}
-                </Heading>
-                <div className="space-y-4 text-sm leading-[1.8] text-muted">
-                  {sec.paragraphs.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                </div>
-              </section>
-            ))}
-
-            <div className="pt-2">
-              <Button href="/datenschutz" variant="outline" size="sm">
-                → Datenschutzerklärung lesen
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
-    </>
-  );
+export default async function ImpressumPage() {
+  const settings = await getPublicSiteSettings();
+  return <ImpressumView impressumHtml={settings.impressumHtml} sections={legalSections} />;
 }

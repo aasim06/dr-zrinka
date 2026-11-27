@@ -1,7 +1,10 @@
+"use client";
 import { Container } from "@/components/ui/Container";
 import { Heading, Eyebrow } from "@/components/ui/Heading";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/components/providers/LocaleProvider";
+import { localizePath } from "@/lib/i18n";
 
 export function EditorialSplit({
   id,
@@ -24,6 +27,7 @@ export function EditorialSplit({
   cta?: { label: string; href: string; variant?: "primary" | "secondary" | "outline" | "link" };
   children?: React.ReactNode;
 }) {
+  const { locale } = useLocale();
   return (
     <section
       id={id}
@@ -49,7 +53,7 @@ export function EditorialSplit({
           )}
           {cta && (
             <div className="mt-8">
-              <Button href={cta.href} variant={cta.variant ?? "outline"}>
+              <Button href={localizePath(cta.href, locale)} variant={cta.variant ?? "outline"}>
                 {cta.label}
               </Button>
             </div>

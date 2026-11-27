@@ -128,3 +128,116 @@ export const executiveDiagnosticPhases = [
     text: "Which targeted changes restore clarity, execution speed, and leadership stability.",
   },
 ];
+
+export const privateSituationsDe = [
+  {
+    title: "Ihr Beitrag spiegelt nicht mehr Ihren Einfluss wider.",
+    text: "Sie bringen Erfahrung, Fachkompetenz und klares Urteilsvermögen mit – doch Ihre Position oder Sichtbarkeit bildet diesen Wert nicht mehr ab. Es stellt sich die Frage, wie Sie die Steuerung über Ihren nächsten Schritt zurückgewinnen.",
+  },
+  {
+    title: "Alle verlassen sich auf Sie. Aber an wen wenden Sie sich?",
+    text: "Sie tragen Verantwortung, balancieren konkurrierende Erwartungen und lösen Probleme für andere. Doch einen vertraulichen Raum für die Prüfung Ihrer eigenen Entscheidungen zu finden, ist erstaunlich schwer.",
+  },
+  {
+    title: "Sie wissen, dass sich etwas ändern muss. Doch Wissen ist noch kein Handeln.",
+    text: "Ihre Prioritäten, Ambitionen oder Rahmenbedingungen haben sich verschoben. Sie haben viel reflektiert – doch der nächste Schritt bleibt blockiert oder alte Muster kehren zurück.",
+  },
+  {
+    title: "Sie sind nicht länger bereit, sich auf dieselbe Art zu beweisen.",
+    text: "Sie wollen, dass die nächste Phase bewusster und souveräner wird – nicht bloß nach außen erfolgreicher.",
+  },
+];
+
+export const privateFormatsDe = [
+  {
+    index: "01",
+    eyebrow: "Das Buch",
+    title: "The Hat and the Hill",
+    text: "Für Frauen, die verstehen wollen, was sich nach 45 verändert – in Körper, Ambition, Identität, Autorität und der Art, ihr Leben zu führen.",
+    ctaLabel: "→ Das Buch entdecken",
+    ctaHref: "/book",
+  },
+  {
+    index: "02",
+    eyebrow: "90-Minuten-Format",
+    title: "Private Advisory Diagnostic",
+    text: "Ein fokussiertes, vertrauliches 90-Minuten-Strategiegespräch, um eine berufliche oder persönliche Herausforderung zu durchdringen, Annahmen zu hinterfragen und eine unabhängige Perspektive zu gewinnen – inklusive schriftlicher Synthese.",
+    ctaLabel: "→ Diagnostic entdecken",
+    ctaHref: "/strategic-conversation",
+  },
+  {
+    index: "03",
+    eyebrow: "Laufende Begleitung",
+    title: "Extended Private Advisory",
+    text: "Manche Weichenstellungen brauchen mehr als ein Gespräch. Eine vertrauliche Sparrings-Partnerschaft über Zeit für komplexe Entscheidungen, Übergänge und bewusste Neuausrichtung – individuell abgestimmt auf Ihre Situation.",
+    ctaLabel: "→ Private Advisory anfragen",
+    ctaHref: "/strategic-conversation",
+  },
+];
+
+export const executiveSituationsDe = [
+  {
+    index: "01",
+    title: "Operativer Druck",
+    text: "Anhaltender Druck beginnt, Klarheit, Tempo und Stabilität auf Führungsebene zu schwächen.",
+  },
+  {
+    index: "02",
+    title: "Wachsende Komplexität",
+    text: "Organisatorische Komplexität wächst schneller als die Entscheidungsstrukturen sie tragen können.",
+  },
+  {
+    index: "03",
+    title: "Internationale Führungsumfelder",
+    text: "Grenzüberschreitende Strukturen erzeugen oft unsichtbare Reibung bei Autorität, Verantwortung und Umsetzung.",
+  },
+  {
+    index: "04",
+    title: "Unklare Verantwortlichkeiten",
+    text: "Führungsebenen überschneiden sich, verlangsamen Entscheidungen oder verwässern Verbindlichkeit.",
+  },
+  {
+    index: "05",
+    title: "Stockende Initiativen",
+    text: "Hohe Kompetenz ist in der Organisation vorhanden – dennoch kommt strategische Bewegung zum Stillstand.",
+  },
+];
+
+export const executiveDiagnosticPhasesDe = [
+  {
+    index: "01",
+    title: "Entscheidungsautorität in der Praxis",
+    text: "Wie Entscheidungsmacht im Führungssystem tatsächlich ausgeübt – oder umgangen – wird.",
+  },
+  {
+    index: "02",
+    title: "Reibung bei Verantwortlichkeiten",
+    text: "Wo Zuständigkeiten Verzögerung, Konflikte oder diffuse Verantwortung erzeugen.",
+  },
+  {
+    index: "03",
+    title: "Führungskommunikation",
+    text: "Wie Kommunikation durch die Organisation fließt und an welchen Stellen Verzerrungen entstehen.",
+  },
+  {
+    index: "04",
+    title: "Strukturelle Anpassungen",
+    text: "Welche gezielten Interventionen Klarheit, Umsetzungsgeschwindigkeit und Führungsstabilität wiederherstellen.",
+  },
+];
+
+export function getPrivateSituations(locale: "en" | "de") {
+  return locale === "de" ? privateSituationsDe : privateSituations;
+}
+
+export function getPrivateFormats(locale: "en" | "de") {
+  return locale === "de" ? privateFormatsDe : privateFormats;
+}
+
+export function getExecutiveSituations(locale: "en" | "de") {
+  return locale === "de" ? executiveSituationsDe : executiveSituations;
+}
+
+export function getExecutiveDiagnosticPhases(locale: "en" | "de") {
+  return locale === "de" ? executiveDiagnosticPhasesDe : executiveDiagnosticPhases;
+}

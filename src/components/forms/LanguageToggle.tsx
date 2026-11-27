@@ -28,7 +28,7 @@ export function LanguageToggle({
               value === lang ? "bg-red text-white" : "text-muted hover:text-ink"
             )}
           >
-            {lang}
+            {lang === "German" ? "Deutsch" : "English"}
           </button>
         ))}
       </div>

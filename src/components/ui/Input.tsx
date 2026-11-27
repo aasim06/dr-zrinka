@@ -15,7 +15,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(function Input(
   return (
     <div className="mb-2.5">
       <label htmlFor={inputId} className={cn("mb-1.5 block text-xs tracking-wide text-muted", hideLabel && "sr-only")}>
-        {label}
+        <span>{label}</span>
         {rest.required && <span aria-hidden> *</span>}
       </label>
       <input
@@ -50,7 +50,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   return (
     <div className="mb-2.5">
       <label htmlFor={inputId} className={cn("mb-1.5 block text-xs tracking-wide text-muted", hideLabel && "sr-only")}>
-        {label}
+        <span>{label}</span>
         {rest.required && <span aria-hidden> *</span>}
       </label>
       <textarea
@@ -85,7 +85,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
   return (
     <div className="mb-2.5">
       <label htmlFor={inputId} className={cn("mb-1.5 block text-xs tracking-wide text-muted", hideLabel && "sr-only")}>
-        {label}
+        <span>{label}</span>
         {rest.required && <span aria-hidden> *</span>}
       </label>
       <select

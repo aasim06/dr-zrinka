@@ -25,6 +25,21 @@ export const featuredJournal = {
   ],
 };
 
+export function getFeaturedJournal(locale: "en" | "de") {
+  if (locale === "de") {
+    return {
+      eyebrow: "Aktueller Journal-Beitrag",
+      title: "In the Valley of Tears",
+      lines: [
+        "Es kommt ein Moment, in dem man ganz unten steht und sich fragt: Wohin führt das alles?",
+        "In ‚The Hat and the Hill‘ nenne ich diesen Ort das Tal der Tränen – obwohl ich ihn schon kannte, lange bevor ich ihm im Buch einen Namen gab.",
+        "Vielleicht kennen Sie ihn auch. Sie spüren genau, dass etwas zu Ende geht. Sie wissen nur noch nicht, was als Nächstes kommt.",
+      ],
+    };
+  }
+  return featuredJournal;
+}
+
 export const journalPosts: JournalPost[] = [
   {
     "slug": "leistungsfahigkeit-karriere-und-gesundheit-von-frauen-unter-einfluss-von-schwankenden-hormonen",

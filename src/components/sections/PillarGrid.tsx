@@ -1,8 +1,11 @@
+"use client";
 import { Container } from "@/components/ui/Container";
 import { Heading, Eyebrow } from "@/components/ui/Heading";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/components/providers/LocaleProvider";
+import { localizePath } from "@/lib/i18n";
 
 export type PillarItem = {
   index?: string;
@@ -33,6 +36,7 @@ export function PillarGrid({
   columns?: 2 | 3 | 4;
   bottomCta?: { label: string; href: string; variant?: "outline" | "secondary" | "primary" };
 }) {
+  const { locale } = useLocale();
   const colClass =
     columns === 2
       ? "md:grid-cols-2"
@@ -89,7 +93,7 @@ export function PillarGrid({
               <p className="mb-6 mt-4 flex-1 text-muted">{it.text}</p>
               {it.meta && <p className="mb-5 text-xs tracking-[0.08em] text-muted uppercase">{it.meta}</p>}
               {it.ctaLabel && it.ctaHref && (
-                <Button href={it.ctaHref} variant="link" className="self-start">
+                <Button href={localizePath(it.ctaHref, locale)} variant="link" className="self-start">
                   {it.ctaLabel}
                 </Button>
               )}
@@ -99,7 +103,7 @@ export function PillarGrid({
 
         {bottomCta && (
           <div className="mt-14 text-center">
-            <Button href={bottomCta.href} variant={bottomCta.variant ?? "outline"}>
+            <Button href={localizePath(bottomCta.href, locale)} variant={bottomCta.variant ?? "outline"}>
               {bottomCta.label}
             </Button>
           </div>

@@ -108,6 +108,67 @@ export const pressItems = [
   },
 ];
 
+export const orderOptionsDe = [
+  {
+    eyebrow: "Sovereign Red Hat Press",
+    title: "Signiertes Exemplar bestellen · €29",
+    text: "Bestellen Sie Ihr persönlich signiertes Exemplar direkt beim Verlag Sovereign Red Hat Press. Zzgl. Versandkosten.",
+    ctaLabel: "→ Signiert bestellen · €29",
+    ctaHref: "mailto:buch@dr-zrinka.com?subject=Signed%20Copy%20Order%20%E2%80%94%20The%20Hat%20and%20the%20Hill",
+  },
+  {
+    eyebrow: "Weltweit",
+    title: "Über Amazon bestellen",
+    text: "Weltweit erhältlich als Taschenbuch sowie als Kindle eBook über Amazon.",
+    ctaLabel: "→ Buch bestellen",
+    ctaHref: "https://amzn.eu/d/06AwoV6U",
+  },
+];
+
+export const insideBookThemesDe = [
+  {
+    index: "01",
+    title: "Hormone, Begehren & die Wendung ab 50",
+    text: "Was geschieht, wenn Ihr Körper die Regeln ändert, aber niemand Ihnen das neue Handbuch mitgegeben hat?",
+  },
+  {
+    index: "02",
+    title: "Das aufgebaute Leben & die Frau, die Sie geworden sind",
+    text: "Wenn alte Rollen, Erwartungen und Formeln zu eng werden – und was sich öffnet, wenn Sie aufhören, gegen sich selbst zu verhandeln.",
+  },
+  {
+    index: "03",
+    title: "Wissenschaft, Selbstironie & gesunder Eigensinn",
+    text: "Von fragwürdigen Wellness-Versprechen bis zu kulturellen Absurditäten – eine Reise durch Dinge, für die wir uns nicht länger entschuldigen.",
+  },
+];
+
+export const pressItemsDe = [
+  {
+    eyebrow: "Novi List",
+    title: "Frauen in der Lebensmitte: Stereotype aufbrechen",
+    text: "Ausgewähltes Interview und Porträt nach der Vorstellung von ‚The Hat and the Hill‘ in Kroatien.",
+    ctaLabel: "ARTIKEL LESEN →",
+    ctaHref: "https://www.novilist.hr/mozaik/zrinka-k-fidermuc-maler-predstavila-prvu-knjigu-zene-u-zrelim-godinama-su-esencija-same-sebe/",
+  },
+  {
+    eyebrow: "Slobodna Dalmacija",
+    title: "Ein ehrliches Gespräch über Menopause, Identität & Lebensmitte",
+    text: "Ausführliches Interview über Hormone, Ambition und das Aussprechen dessen, worüber Frauen lange geschwiegen haben.",
+    ctaLabel: "INTERVIEW LESEN →",
+    ctaHref: "https://zdravlje.slobodnadalmacija.hr/mozaik/zivot/doktorica-politickih-znanosti-detaljno-opisala-svoju-menopauzu-vukla-sam-se-kroz-zivot-ko-magla-u-zagrebu-a-onda-1584187",
+  },
+];
+
+export function getBookContent(locale: "en" | "de") {
+  return {
+    orderOptions: locale === "de" ? orderOptionsDe : orderOptions,
+    insideBookThemes: locale === "de" ? insideBookThemesDe : insideBookThemes,
+    pressItems: locale === "de" ? pressItemsDe : pressItems,
+    readerReviews,
+  };
+}
+
 export const sampleChapterParagraphs = [
   "A woman hit rock bottom… and politely apologized to the rock.",
   "That’s not the kind of tale I recite in leadership seminars or in the quieter moments where people come to me searching for themselves again. This wasn’t the polished kind—it bled before it bloomed.",

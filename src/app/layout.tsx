@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { Newsletter } from "@/components/sections/Newsletter";
+import { SiteChrome } from "@/components/layout/SiteChrome";
+import { LocaleProvider } from "@/components/providers/LocaleProvider";
+import { getServerLocale } from "@/lib/locale-server";
 
-const serif = Cormorant_Garamond({ subsets: ["latin"], weight: ["500", "600"], style: ["normal", "italic"], variable: "--font-serif", display: "swap" });
+export const dynamic = "force-dynamic";
+
+const serif = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+  display: "swap",
+});
 const sans = Montserrat({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-sans", display: "swap" });
 
 export const metadata: Metadata = {
@@ -24,13 +32,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const locale = getServerLocale();
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang={locale} suppressHydrationWarning className={`${serif.variable} ${sans.variable}`}>
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <Newsletter />
+        <LocaleProvider initialLocale={locale}>
+          <SiteChrome>{children}</SiteChrome>
+        </LocaleProvider>
       </body>
     </html>
   );

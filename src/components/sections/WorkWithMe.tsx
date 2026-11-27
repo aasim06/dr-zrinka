@@ -1,37 +1,25 @@
+"use client";
 import { Container } from "@/components/ui/Container";
 import { Heading } from "@/components/ui/Heading";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-
-const items = [
-  {
-    title: "Private executive advisory",
-    text: "Strategic advisory for individuals and leaders navigating consequential decisions, career transitions, questions of authority, and personal or professional reinvention.",
-    cta: "Explore private advisory",
-    href: "/advisory#private",
-  },
-  {
-    title: "Organizational and leadership advisory",
-    text: "Strategic collaboration with organizations seeking stronger leadership alignment, more effective execution, or new concepts and experiences, including premium hospitality.",
-    cta: "For organizations",
-    href: "/advisory#organizations",
-  },
-  {
-    title: "Author and book",
-    text: "A provocative, science-informed exploration of reinvention, identity, and sovereignty in the second half of life. A book that challenges expectations and invites readers to question what’s possible.",
-    cta: "Discover the book",
-    href: "/book",
-  },
-];
+import { getUiCopy } from "@/data/translations";
+import { localizePath } from "@/lib/i18n";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
 export function WorkWithMe() {
+  const { locale } = useLocale();
+  const copy = getUiCopy(locale).home;
+
   return (
     <section className="py-[72px] md:py-[104px]">
       <Container>
-        <div className="mb-14 max-w-[640px]"><Heading level={2}>Explore my work</Heading></div>
+        <div className="mb-14 max-w-[640px]">
+          <Heading level={2}>{copy.workHeading}</Heading>
+        </div>
         <div className="grid border-t border-ink md:grid-cols-3">
-          {items.map((it, i) => (
+          {copy.workItems.map((it, i) => (
             <Card
               key={it.title}
               className={cn(
@@ -41,12 +29,16 @@ export function WorkWithMe() {
             >
               <Heading level={3}>{it.title}</Heading>
               <p className="mb-7 mt-4 flex-1 text-muted">{it.text}</p>
-              <Button href={it.href} variant="link" className="self-start">{it.cta}</Button>
+              <Button href={localizePath(it.href, locale)} variant="link" className="self-start">
+                {it.cta}
+              </Button>
             </Card>
           ))}
         </div>
         <div className="mt-16 text-center">
-          <Button href="/contact" variant="outline">Request a Strategic Conversation</Button>
+          <Button href={localizePath("/strategic-conversation", locale)} variant="outline">
+            {copy.workBottomCta}
+          </Button>
         </div>
       </Container>
     </section>

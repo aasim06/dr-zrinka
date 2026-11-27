@@ -193,3 +193,66 @@ export const pastEvents: EventItem[] = [
 ];
 
 export const allEvents = [...upcomingEvents, ...pastEvents];
+
+export const keynoteTopicsDe = [
+  {
+    index: "01",
+    title: "Führung unter Druck",
+    text: "Warum Entscheidungen langsamer werden, wenn Autorität im System bricht.",
+  },
+  {
+    index: "02",
+    title: "Führung, Macht & Autorschaft",
+    text: "Wie der Körper Wahrnehmung, Urteilsvermögen und Führungspräsenz steuert.",
+  },
+  {
+    index: "03",
+    title: "Autorität in komplexen Organisationen",
+    text: "Warum Verantwortung zerfasert – und wie Führungskräfte Klarheit wiederherstellen.",
+  },
+  {
+    index: "04",
+    title: "Souveräne Führung",
+    text: "Was es heißt zu führen, wenn Strukturen, Erwartungen und hoher Druck aufeinanderprallen.",
+  },
+];
+
+export const keynoteSignalsDe = [
+  "Strategische Prioritäten verschieben sich und die Richtung verliert an Stabilität",
+  "Die Umsetzung stockt, obwohl der Plan auf dem Papier schlüssig aussieht",
+  "Entscheidungen werden getroffen, aber im Alltag nicht konsequent getragen",
+  "Führungswechsel finden statt, doch die erwartete Dynamik bleibt aus",
+  "Teams stimmen nach außen zu, bewegen sich intern jedoch nicht mit",
+  "Wichtige Entscheidungen werden vertagt, neu verhandelt oder still umgangen",
+  "Etwas stimmt spürbar im System nicht, lässt sich aber schwer benennen",
+];
+
+export const keynoteAudiencesDe = [
+  "Vorstände und Executive-Teams",
+  "Führungskräfteprogramme und Business Schools",
+  "Medizinische und akademische Fachorganisationen",
+  "Konferenzen zu Führung, Verantwortung und Entscheidungskultur",
+];
+
+export const keynoteFormatsDe = [
+  "Konferenz-Keynotes",
+  "Executive-Programm-Sessions",
+  "Moderierte Salon-Gespräche",
+  "Keynote + intensiver Publikumsdialog",
+];
+
+export function getKeynoteContent(locale: "en" | "de") {
+  return locale === "de"
+    ? {
+        keynoteTopics: keynoteTopicsDe,
+        keynoteSignals: keynoteSignalsDe,
+        keynoteAudiences: keynoteAudiencesDe,
+        keynoteFormats: keynoteFormatsDe,
+      }
+    : {
+        keynoteTopics,
+        keynoteSignals,
+        keynoteAudiences,
+        keynoteFormats,
+      };
+}

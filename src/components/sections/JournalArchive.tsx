@@ -5,9 +5,21 @@ import { Eyebrow, Heading } from "@/components/ui/Heading";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import type { JournalPost } from "@/data/journal";
+import type { PublicPostSummary } from "@/lib/public-data";
+import { getPagesCopy } from "@/data/translations-pages";
+import { localizePath, type Locale } from "@/lib/i18n";
+import { useLocale } from "@/components/providers/LocaleProvider";
 
-export function JournalArchive({ posts }: { posts: JournalPost[] }) {
+export function JournalArchive({
+  posts,
+}: {
+  posts: PublicPostSummary[];
+  locale?: Locale;
+}) {
+  const { locale } = useLocale();
+  const copy = getPagesCopy(locale).journal;
+  const isDe = locale === "de";
+
   const [filter, setFilter] = useState<"ALL" | "EN" | "DE">("ALL");
   const visible = filter === "ALL" ? posts : posts.filter((p) => p.lang === filter);
 
@@ -16,14 +28,14 @@ export function JournalArchive({ posts }: { posts: JournalPost[] }) {
       <Container>
         <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-[620px]">
-            <Eyebrow tone="red" className="mb-3">Archive</Eyebrow>
-            <Heading level={2}>Essays &amp; Field Notes</Heading>
+            <Eyebrow tone="red" className="mb-3">{copy.archiveEyebrow}</Eyebrow>
+            <Heading level={2}>{copy.archiveTitle}</Heading>
           </div>
 
           <div className="inline-flex border border-line bg-paper p-0.5" role="group" aria-label="Filter by language">
             {(
               [
-                { id: "ALL", label: "All" },
+                { id: "ALL", label: isDe ? "Alle" : "All" },
                 { id: "EN", label: "English" },
                 { id: "DE", label: "Deutsch" },
               ] as const
@@ -54,7 +66,14 @@ export function JournalArchive({ posts }: { posts: JournalPost[] }) {
               )}
             >
               <div>
-                <div className="mb-3 flex items-center gap-3 text-xs tracking-[0.1em] text-muted uppercase">
+                {post.coverImage && (
+                  <img
+                    src={post.coverImage}
+                    alt={post.title}
+                    className="mb-5 aspect-[16/9] w-full object-cover"
+                  />
+                )}
+                <div className="mb-3 flex flex-wrap items-center gap-3 text-xs tracking-[0.1em] text-muted uppercase">
                   <span>{post.date}</span>
                   <span>·</span>
                   <span className="border border-gold/60 px-2 py-0.5 text-[10px] font-medium text-red">
@@ -62,14 +81,20 @@ export function JournalArchive({ posts }: { posts: JournalPost[] }) {
                   </span>
                   <span>·</span>
                   <span>{post.readTime}</span>
+                  {post.audioUrl && (
+                    <>
+                      <span>·</span>
+                      <span className="text-red">Audio</span>
+                    </>
+                  )}
                 </div>
                 <Heading level={3} className="!text-[26px] leading-[1.2]">
                   {post.title}
                 </Heading>
                 <p className="mb-6 mt-3.5 text-sm leading-relaxed text-muted">{post.excerpt}</p>
               </div>
-              <Button href={`/journal/${post.slug}`} variant="link" className="self-start">
-                → Read Essay
+              <Button href={localizePath(`/journal/${post.slug}`, locale)} variant="link" className="self-start">
+                {copy.readEssay}
               </Button>
             </Card>
           ))}

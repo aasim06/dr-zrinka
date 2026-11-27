@@ -1,8 +1,11 @@
+"use client";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Heading, Eyebrow } from "@/components/ui/Heading";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/components/providers/LocaleProvider";
+import { localizePath } from "@/lib/i18n";
 
 export type HeroAction = {
   label: string;
@@ -36,6 +39,7 @@ export function PageHero({
   media?: HeroMedia;
   compact?: boolean;
 }) {
+  const { locale } = useLocale();
   const paragraphs = Array.isArray(lead) ? lead : lead ? [lead] : [];
 
   return (
@@ -67,12 +71,12 @@ export function PageHero({
           {(primaryCta || secondaryCta) && (
             <div className="mt-10 flex flex-wrap items-center gap-4">
               {primaryCta && (
-                <Button href={primaryCta.href} variant={primaryCta.variant ?? "primary"}>
+                <Button href={localizePath(primaryCta.href, locale)} variant={primaryCta.variant ?? "primary"}>
                   {primaryCta.label}
                 </Button>
               )}
               {secondaryCta && (
-                <Button href={secondaryCta.href} variant={secondaryCta.variant ?? "outline-light"}>
+                <Button href={localizePath(secondaryCta.href, locale)} variant={secondaryCta.variant ?? "outline-light"}>
                   {secondaryCta.label}
                 </Button>
               )}

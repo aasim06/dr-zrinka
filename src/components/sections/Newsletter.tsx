@@ -2,9 +2,13 @@
 import { useEffect, useState } from "react";
 import { Heading } from "@/components/ui/Heading";
 import { NewsletterForm } from "./NewsletterForm";
+import { useLocale } from "@/components/providers/LocaleProvider";
+import { getUiCopy } from "@/data/translations";
 
-// Floating "Your Sunday morning read" pop-up (appears after 6s, once per session)
+// Floating "Your Sunday morning read" pop-up (mounted only when open so it never collides with hydration)
 export function Newsletter() {
+  const { locale } = useLocale();
+  const copy = getUiCopy(locale).newsletter;
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -29,21 +33,20 @@ export function Newsletter() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
+  if (!open) return null;
+
   return (
     <aside
       role="dialog"
-      aria-label="Subscribe to The Journal"
-      aria-hidden={!open}
-      className={[
-        "fixed bottom-6 right-4 z-40 w-[min(380px,calc(100%-32px))] border-t-[3px] border-gold bg-white px-7 pb-[26px] pt-[30px] shadow-[0_24px_60px_rgba(0,0,0,.28)] transition-all duration-[400ms] sm:right-6",
-        open ? "visible translate-y-0 opacity-100" : "invisible pointer-events-none translate-y-6 opacity-0",
-      ].join(" ")}
+      aria-label={copy.subtitle}
+      style={{ animation: "drawerFadeIn 260ms ease-out" }}
+      className="fixed bottom-6 left-4 z-30 w-[min(360px,calc(100%-32px))] border-t-[3px] border-gold bg-white px-7 pb-[26px] pt-[30px] shadow-[0_24px_60px_rgba(0,0,0,.28)] sm:left-6"
     >
       <button onClick={close} aria-label="Close" className="absolute right-3 top-2 p-1.5 text-[26px] leading-none text-muted hover:text-ink">
         &times;
       </button>
-      <Heading level={3} className="italic">Your Sunday morning read.</Heading>
-      <p className="mb-[18px] mt-1.5 font-medium">Subscribe to The Journal.</p>
+      <Heading level={3} className="italic">{copy.title}</Heading>
+      <p className="mb-[18px] mt-1.5 font-medium">{copy.subtitle}</p>
       <NewsletterForm onDone={close} compact />
     </aside>
   );

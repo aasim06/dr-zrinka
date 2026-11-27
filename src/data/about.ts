@@ -18,3 +18,28 @@ export const careerArc = [
     text: "Deepened executive development and organizational change work with senior leaders navigating structural shifts, cultural friction, and strategic uncertainty.",
   },
 ];
+
+export const careerArcDe = [
+  {
+    index: "01",
+    eyebrow: "Finanzwirtschaft · Zagreb",
+    title: "Finance — Zagreb",
+    text: "Beratung in komplexen Unternehmensstrukturen der Finanzindustrie, in denen Risiko, Kapitalallokation und regulatorische Präzision jede Entscheidung prägten.",
+  },
+  {
+    index: "02",
+    eyebrow: "Wissenschaft & Politik · Bonn",
+    title: "DLR-PT — Bonn",
+    text: "Wissenschaftlerin und Projektträger-Referentin beim Deutschen Zentrum für Luft- und Raumfahrt (DLR-PT) für nationale und europäische Innovationsprogramme und Technologietransfer.",
+  },
+  {
+    index: "03",
+    eyebrow: "Executive Development",
+    title: "Management Institut Kitzmann",
+    text: "Vertiefte Führungskräfteentwicklung und Begleitung von Top-Entscheidern in strukturellen Veränderungen, kultureller Reibung und strategischer Unsicherheit.",
+  },
+];
+
+export function getCareerArc(locale: "en" | "de") {
+  return locale === "de" ? careerArcDe : careerArc;
+}

@@ -1,8 +1,11 @@
+"use client";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Heading, Eyebrow } from "@/components/ui/Heading";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/components/providers/LocaleProvider";
+import { localizePath } from "@/lib/i18n";
 
 export function MediaFeature({
   id,
@@ -29,6 +32,7 @@ export function MediaFeature({
   cta?: { label: string; href: string; variant?: "primary" | "secondary" | "outline" | "link" };
   secondaryCta?: { label: string; href: string; variant?: "primary" | "secondary" | "outline" | "link" };
 }) {
+  const { locale } = useLocale();
   const mediaBlock = (
     <div>
       <div
@@ -87,12 +91,12 @@ export function MediaFeature({
       {(cta || secondaryCta) && (
         <div className="mt-8 flex flex-wrap items-center gap-4">
           {cta && (
-            <Button href={cta.href} variant={cta.variant ?? "outline"}>
+            <Button href={localizePath(cta.href, locale)} variant={cta.variant ?? "outline"}>
               {cta.label}
             </Button>
           )}
           {secondaryCta && (
-            <Button href={secondaryCta.href} variant={secondaryCta.variant ?? "link"}>
+            <Button href={localizePath(secondaryCta.href, locale)} variant={secondaryCta.variant ?? "link"}>
               {secondaryCta.label}
             </Button>
           )}
